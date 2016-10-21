@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SJSUMap.iml" filepath="$PROJECT_DIR$/SJSUMap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SJSUmap.iml" filepath="$PROJECT_DIR$/SJSUmap.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
