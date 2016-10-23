@@ -7,40 +7,47 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.chaitanya.sjsumap.MapActivity">
+    tools:context="com.chaitanya.sjsumap.MapActivity"
+    >
+
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="894dp"
         android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/campusmap" />
+        android:background="@drawable/campusmap"
+        android:layout_alignParentEnd="true" />
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:rowCount="10"
-        android:columnCount="10">
+        android:columnCount="10"
+        android:id="@+id/gridLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px"
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/searchView"
+            android:layout_alignParentBottom="true"
+            android:text=" Awesome "
             android:layout_row="0"
-            android:layout_column="1" />
 
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_row="9"
-            android:layout_column="2" />0
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_row="9"
-            android:layout_column="9" />
+            android:layout_column="8" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_row="1"
+            android:layout_column="8"
+            android:choiceMode="singleChoice" />
+
+
     </GridLayout>
+
 
 </RelativeLayout>
