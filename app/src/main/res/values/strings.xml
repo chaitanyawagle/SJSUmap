@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SJSU Map</string>
+    <string-array name="array_sjsu">
+        <item>King Library</item>
+        <item>Engineering Building</item>
+        <item>Yoshihiro Uchida Hall</item>
+        <item>Student Union</item>
+        <item>BBC</item>
+        <item>South Parking Garage</item>
+    </string-array>
 </resources>
