@@ -36,7 +36,8 @@ public class MapActivity extends AppCompatActivity {
                     if(building.checkTouch((int)event.getX() - v.getLeft(),(int)event.getY()- v.getTop())){
                         try {
                             Intent buildingIntent = new Intent(MapActivity.this, Class.forName("com.chaitanya.sjsumap.BuildingActivity"));
-                            
+                            buildingIntent.putExtra("building",building);
+                            startActivity(buildingIntent);
                         }catch (ClassNotFoundException e){
                             e.printStackTrace();
                         }
