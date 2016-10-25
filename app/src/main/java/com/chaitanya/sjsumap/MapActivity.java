@@ -1,5 +1,6 @@
 package com.chaitanya.sjsumap;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -33,7 +34,12 @@ public class MapActivity extends AppCompatActivity {
                 System.out.println("(" + ((int)event.getX() - v.getLeft()) + "," + ((int)event.getY()- v.getTop()) + ")");
                 for(Building building: buildingList){
                     if(building.checkTouch((int)event.getX() - v.getLeft(),(int)event.getY()- v.getTop())){
-                        Toast.makeText(MapActivity.this, building.name.toString(),Toast.LENGTH_SHORT).show();
+                        try {
+                            Intent buildingIntent = new Intent(MapActivity.this, Class.forName("com.chaitanya.sjsumap.BuildingActivity"));
+                            
+                        }catch (ClassNotFoundException e){
+                            e.printStackTrace();
+                        }
                     }
                 }
                 return false;
