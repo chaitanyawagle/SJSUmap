@@ -16,15 +16,17 @@ public class Building implements Parcelable {
     public String address;
     public int id;
     public int image;
+    public String url;
     //Declare all variable related to building here.
 
-    public Building(int id,int image, String name,String address, Coordinate start, Coordinate end){
+    public Building(int id,int image, String name,String address, Coordinate start, Coordinate end,String url){
         this.start = start;
         this.end = end;
         this.name = name;
         this.address = address;
         this.id = id;
         this.image = image;
+        this.url = url;
 
         //Initilaize all variables here.
     }
@@ -41,6 +43,7 @@ public class Building implements Parcelable {
         address = in.readString();
         id = in.readInt();
         image = in.readInt();
+        url = in.readString();
     }
 
     public static final Creator<Building> CREATOR = new Creator<Building>() {
@@ -66,5 +69,6 @@ public class Building implements Parcelable {
         dest.writeString(address);
         dest.writeInt(id);
         dest.writeInt(image);
+        dest.writeString(url);
     }
 }
