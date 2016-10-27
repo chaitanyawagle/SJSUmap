@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:id="@+id/buildingImageView"
         android:layout_alignParentTop="true"
-        android:background="@drawable/Medstreetview" />
+         />
 
     <TextView
         android:layout_width="match_parent"
@@ -56,5 +56,4 @@
         android:text="Street View"
         android:id="@+id/streetView"
         android:layout_alignParentBottom="true"/>
-
 </RelativeLayout>

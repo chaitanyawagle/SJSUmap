@@ -32,12 +32,12 @@ public class MapActivity extends AppCompatActivity {
         pin.setImageResource(R.drawable.pin);
         //Adding Building as per list given by professor
         //Order is same as the list
-        buildingList.add(new Building(1,"King Library","150 East San Fernando Street, San Jose, CA 95112",new Coordinate(180,720),new Coordinate(304,945)));
-        buildingList.add(new Building(2,"Engineering Building","1 Washington Square, San Jose, CA 95112",new Coordinate(714,720),new Coordinate(918,985)));
-        buildingList.add(new Building(3,"Yoshihiro Uchida Hall","Yoshihiro Uchida Hall, San Jose, CA 95112",new Coordinate(160,1280),new Coordinate(300,1470)));
-        buildingList.add(new Building(4,"Student Union","Student Union Building, San Jose, CA 95112",new Coordinate(720,1010),new Coordinate(1065,1155)));
-        buildingList.add(new Building(5,"BBC","Boccardo Business Complex, San Jose, CA 95112",new Coordinate(1110,1155),new Coordinate(1250,1280)));
-        buildingList.add(new Building(6,"South Parking Garage","330 South 7th Street, San Jose, CA 95112",new Coordinate(450,1710),new Coordinate(684,1915)));
+        buildingList.add(new Building(1,R.drawable.kinglibrary,"King Library","150 East San Fernando Street, San Jose, CA 95112",new Coordinate(180,720),new Coordinate(304,945)));
+        buildingList.add(new Building(2,R.drawable.engineeringbuilding,"Engineering Building","1 Washington Square, San Jose, CA 95112",new Coordinate(714,720),new Coordinate(918,985)));
+        buildingList.add(new Building(3,R.drawable.yoshihirouchidahall,"Yoshihiro Uchida Hall","Yoshihiro Uchida Hall, San Jose, CA 95112",new Coordinate(160,1280),new Coordinate(300,1470)));
+        buildingList.add(new Building(4,R.drawable.studentunion,"Student Union","Student Union Building, San Jose, CA 95112",new Coordinate(720,1010),new Coordinate(1065,1155)));
+        buildingList.add(new Building(5,R.drawable.bbc, "BBC","Boccardo Business Complex, San Jose, CA 95112",new Coordinate(1110,1155),new Coordinate(1250,1280)));
+        buildingList.add(new Building(6,R.drawable.southparkinggarage,"South Parking Garage","330 South 7th Street, San Jose, CA 95112",new Coordinate(450,1710),new Coordinate(684,1915)));
 
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
