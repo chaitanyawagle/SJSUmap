@@ -22,6 +22,9 @@ public class MapActivity extends AppCompatActivity {
     ImageView pin;
     RelativeLayout.LayoutParams pinParams;
 
+    //(110,685) -> (37.335813, -121.885899)
+    //(1297,1960) -> (37.334602, -121.876608)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

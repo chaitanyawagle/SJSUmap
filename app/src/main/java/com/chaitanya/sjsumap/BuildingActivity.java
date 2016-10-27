@@ -25,6 +25,5 @@ public class BuildingActivity extends AppCompatActivity {
         buildingImage.setBackgroundResource(building.image);
         name.setText(building.name);
         address.setText(building.address);
-
     }
 }
