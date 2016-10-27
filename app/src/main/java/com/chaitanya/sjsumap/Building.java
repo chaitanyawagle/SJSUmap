@@ -10,8 +10,8 @@ import java.io.Serializable;
  */
 public class Building implements Parcelable {
 
-    private Coordinate start;
-    private Coordinate end;
+    public Coordinate start;
+    public Coordinate end;
     public String name;
     public String address;
     public int id;

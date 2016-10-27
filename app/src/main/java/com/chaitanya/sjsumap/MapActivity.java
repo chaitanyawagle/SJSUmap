@@ -1,11 +1,15 @@
 package com.chaitanya.sjsumap;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,20 +18,27 @@ public class MapActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout;
     ArrayList<Building> buildingList = new ArrayList<Building>();
+    SearchView searchBuilding;
+    ImageView pin;
+    RelativeLayout.LayoutParams pinParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        relativeLayout = (RelativeLayout)findViewById(R.id.mainLayout);
+        searchBuilding = (SearchView)findViewById(R.id.searchBuilding);
+        pin = new ImageView(MapActivity.this);
+        pin.setImageResource(R.drawable.pin);
         //Adding Building as per list given by professor
         //Order is same as the list
-        buildingList.add(new Building(1,"MLK","MLK Address",new Coordinate(170,600),new Coordinate(310,850)));
-        buildingList.add(new Building(2,"ENG","ENG Address",new Coordinate(720,600),new Coordinate(920,900)));
-        buildingList.add(new Building(3,"YUH","YUH Address",new Coordinate(150,1210),new Coordinate(300,1420)));
-        buildingList.add(new Building(4,"SU","SU Address",new Coordinate(720,930),new Coordinate(1065,1070)));
-        buildingList.add(new Building(5,"BBC","BBC Address",new Coordinate(1110,1075),new Coordinate(1250,1215)));
-        buildingList.add(new Building(6,"SPG","SPG Address",new Coordinate(450,1675),new Coordinate(695,1910)));
-        relativeLayout = (RelativeLayout)findViewById(R.id.mainLayout);
+        buildingList.add(new Building(1,"King Library","150 East San Fernando Street, San Jose, CA 95112",new Coordinate(180,720),new Coordinate(304,945)));
+        buildingList.add(new Building(2,"Engineering Building","1 Washington Square, San Jose, CA 95112",new Coordinate(714,720),new Coordinate(918,985)));
+        buildingList.add(new Building(3,"Yoshihiro Uchida Hall","Yoshihiro Uchida Hall, San Jose, CA 95112",new Coordinate(160,1280),new Coordinate(300,1470)));
+        buildingList.add(new Building(4,"Student Union","Student Union Building, San Jose, CA 95112",new Coordinate(720,1010),new Coordinate(1065,1155)));
+        buildingList.add(new Building(5,"BBC","Boccardo Business Complex, San Jose, CA 95112",new Coordinate(1110,1155),new Coordinate(1250,1280)));
+        buildingList.add(new Building(6,"South Parking Garage","330 South 7th Street, San Jose, CA 95112",new Coordinate(450,1710),new Coordinate(684,1915)));
+
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -43,6 +54,29 @@ public class MapActivity extends AppCompatActivity {
                         }
                     }
                 }
+                return false;
+            }
+        });
+
+        searchBuilding.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                for(Building building: buildingList){
+                    if(query.equals(building.name)){
+                        if(relativeLayout.indexOfChild(pin) != 0)
+                            relativeLayout.removeView(pin);
+                        pinParams = new RelativeLayout.LayoutParams(((building.start.x + building.end.x)/2) - building.start.x,((building.start.y + building.end.y)/2) - building.start.y);
+                        pinParams.leftMargin = building.start.x;
+                        pinParams.topMargin = building.start.y;
+                        relativeLayout.addView(pin, pinParams);
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                System.out.println(newText);
                 return false;
             }
         });

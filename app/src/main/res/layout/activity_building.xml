@@ -9,21 +9,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.chaitanya.sjsumap.BuildingActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/buildingName"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/buildingImageView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:background="@drawable/Medstreetview" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/buildingAddress"
-        android:layout_below="@+id/buildingName"
-        android:layout_alignParentStart="true" />
+        android:textSize="30sp"
+        android:text="Large Text"
+        android:id="@+id/buildingName"
+        android:layout_alignBottom="@+id/buildingImageView"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/abc_background_cache_hint_selector_material_light" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/buildingImageView"
+        android:id="@+id/buildingDetails">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/buildingAddress" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/duration" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Street View"
+        android:id="@+id/streetView"
+        android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
