@@ -16,16 +16,6 @@
         android:layout_alignParentTop="true"
          />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp"
-        android:text="Large Text"
-        android:id="@+id/buildingName"
-        android:layout_alignBottom="@+id/buildingImageView"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="@color/abc_background_cache_hint_selector_material_light" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -34,6 +24,18 @@
         android:layout_centerVertical="true"
         android:layout_below="@+id/buildingImageView"
         android:id="@+id/buildingDetails">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/buildingName"
+            android:layout_alignBottom="@+id/buildingImageView"
+            android:gravity="center_vertical|center_horizontal"
+             />
 
         <TextView
             android:layout_width="match_parent"
