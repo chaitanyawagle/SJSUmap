@@ -1,7 +1,14 @@
 package com.chaitanya.sjsumap;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,7 +28,7 @@ public class MapActivity extends AppCompatActivity {
     SearchView searchBuilding;
     ImageView pin;
     RelativeLayout.LayoutParams pinParams;
-
+    LocationManager locationManager;
     //(110,685) -> (37.335813, -121.885899)
     //(1297,1960) -> (37.334602, -121.876608)
 
@@ -29,10 +36,11 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        relativeLayout = (RelativeLayout)findViewById(R.id.mainLayout);
-        searchBuilding = (SearchView)findViewById(R.id.searchBuilding);
+        relativeLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+        searchBuilding = (SearchView) findViewById(R.id.searchBuilding);
         pin = new ImageView(MapActivity.this);
         pin.setImageResource(R.drawable.pin);
+
         //Adding Building as per list given by professor
         //Order is same as the list
         buildingList.add(new Building(1,R.drawable.kinglibrary,"King Library","150 East San Fernando Street, San Jose, CA 95112",new Coordinate(180,720),new Coordinate(304,945)));
@@ -84,6 +92,4 @@ public class MapActivity extends AppCompatActivity {
             }
         });
     }
-    
-
 }
