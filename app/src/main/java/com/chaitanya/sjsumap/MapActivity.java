@@ -1,10 +1,16 @@
 package com.chaitanya.sjsumap;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,9 +18,34 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+
 import java.util.ArrayList;
 
-public class MapActivity extends AppCompatActivity {
+
+
+public class MapActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener, GoogleMap.OnMyLocationChangeListener{
+
+    /**
+     * The desired interval for location updates. Inexact. Updates may be more
+     * or less frequent.
+     */
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    /**
+     * The fastest rate for active location updates. Exact. Updates will never
+     * be more frequent than this value.
+     */
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+
+    protected GoogleApiClient mGoogleApiClient;
+
+    protected LocationRequest mLocationRequest;
 
     RelativeLayout relativeLayout;
     ArrayList<Building> buildingList = new ArrayList<Building>();
@@ -27,6 +58,7 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         relativeLayout = (RelativeLayout)findViewById(R.id.mainLayout);
@@ -83,7 +115,150 @@ public class MapActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-    
 
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+        }
+        else {
+
+            buildGoogleApiClient();
+            mGoogleApiClient.connect();
+        }
+
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    buildGoogleApiClient();
+                    mGoogleApiClient.connect();
+
+                    if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
+                    {
+                        startLocationUpdates();
+                    }
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    Toast.makeText(MapActivity.this, "You need to provide location permission in order to use this app", Toast.LENGTH_SHORT).show();
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
+        {
+            startLocationUpdates();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
+            mGoogleApiClient.disconnect();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+        createLocationRequest();
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        // Sets the desired interval for active location updates. This interval
+        // is
+        // inexact. You may not receive updates at all if no location sources
+        // are available, or
+        // you may receive them slower than requested. You may also receive
+        // updates faster than
+        // requested if other applications are requesting location at a faster
+        // interval.
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+        // Sets the fastest rate for active location updates. This interval is
+        // exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest
+                .setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    protected void startLocationUpdates() {
+        // The final argument to {@code requestLocationUpdates()} is a
+        // LocationListener
+        // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+
+        Location lastKnownLocation = LocationServices.FusedLocationApi
+                .getLastLocation(mGoogleApiClient);
+
+            startLocationUpdates();
+
+        if (lastKnownLocation != null)
+        {
+            System.err.println("Last known location " + lastKnownLocation.getLatitude() + ", " + lastKnownLocation.getLongitude());
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        Log.i("Google Api", "Connection suspended");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult arg0) {
+        // TODO Auto-generated method stub
+        Log.i("Google Api", "Connection failed");
+    }
+
+    ;
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        System.err.println("Location: lat " + location.getLatitude() + " longitude " + location.getLongitude());
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        System.err.println(" My Location: lat " + location.getLatitude() + " longitude " + location.getLongitude());
+    }
 }
