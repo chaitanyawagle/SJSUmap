@@ -3,7 +3,9 @@ package com.chaitanya.sjsumap;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -53,8 +55,14 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     SearchView searchBuilding;
     ImageView pin;
     RelativeLayout.LayoutParams pinParams;
+    ImageView dot;
+    RelativeLayout.LayoutParams dotParams;
 
-    //(110,685) -> (37.335813, -121.885899)
+    Location upperLeft = new Location("");
+    Location lowerRight = new Location("");
+
+    Bitmap bmp;
+    //(110,680) -> (37.335813, -121.885899)
     //(1297,1960) -> (37.334602, -121.876608)
 
     @Override
@@ -66,8 +74,29 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         searchBuilding = (SearchView)findViewById(R.id.searchBuilding);
         pin = new ImageView(MapActivity.this);
         pin.setImageResource(R.drawable.pin);
+        pin.setDrawingCacheEnabled(true);
+
+        dot = new ImageView(MapActivity.this);
+        dot.setImageResource(R.drawable.red_dot);
+        dotParams = new RelativeLayout.LayoutParams(50,50);
+
+        upperLeft.setLatitude(37.335813);
+        upperLeft.setLongitude(-121.885899);
+
+        lowerRight.setLatitude(37.334602);
+        lowerRight.setLongitude(-121.876608);
+
+//891,-2471
+        //1287,685
+
+
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        bmp = ((BitmapDrawable)imageView.getBackground()).getBitmap();
+        ImageSizeW = 1187;
+        ImageSizeH = 1275;
         //Adding Building as per list given by professor
         //Order is same as the list
+
         buildingList.add(new Building(1,R.drawable.kinglibrary,R.string.kingname,R.string.kingaddress,new Coordinate(180,720),new Coordinate(304,945),R.string.kingstreetview));
         buildingList.add(new Building(2,R.drawable.engineeringbuilding,R.string.engname,R.string.kingaddress,new Coordinate(714,720),new Coordinate(918,985),R.string.engstreetview));
         buildingList.add(new Building(3,R.drawable.yoshihirouchidahall,R.string.yuhname ,R.string.yuhaddress,new Coordinate(160,1280),new Coordinate(300,1470),R.string.yuhstreetview));
@@ -127,15 +156,10 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
-        }
-        else {
-
+        } else {
             buildGoogleApiClient();
             mGoogleApiClient.connect();
         }
-
-
-
     }
 
     @Override
@@ -223,10 +247,12 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                 mGoogleApiClient, mLocationRequest, this);
     }
 
+    Location lastKnownLocation;
+
     @Override
     public void onConnected(Bundle connectionHint) {
 
-        Location lastKnownLocation = LocationServices.FusedLocationApi
+        lastKnownLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 
             startLocationUpdates();
@@ -249,17 +275,54 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         Log.i("Google Api", "Connection failed");
     }
 
-    ;
-
 
     @Override
     public void onLocationChanged(Location location) {
-        ImageView dot = new ImageView(MapActivity.this);
-        dot.setImageResource(R.drawable.red_dot);
-        RelativeLayout.LayoutParams dotParams = new RelativeLayout.LayoutParams(20,20);
-        dotParams.leftMargin = 644;
-        dotParams.topMargin = 765;
+        if(relativeLayout.indexOfChild(dot) != 0){
+            relativeLayout.removeView(dot);
+        }
+        double xpx = getXPixel(location);
+        double ypx = getYPixel(location);
+        System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
+        System.out.println("Pixel(" + ((int)xpx+105) + "," + ((int)ypx+685) + ")");
+        dotParams.leftMargin = (int)xpx + 105;
+        dotParams.topMargin = (int)ypx + 685;
         relativeLayout.addView(dot, dotParams);
+        System.out.println("done");
+
+    }
+
+    public final static double OneEightyDeg = 180.0d;
+    public double ImageSizeW, ImageSizeH;
+
+    public double getXPixel(Location current){
+        double hypotenuse = upperLeft.distanceTo(current);
+        System.out.println("Hypo" + hypotenuse);
+        double bearing = upperLeft.bearingTo(current);
+        System.out.println("bearing" + bearing);
+        double currentDistanceX = Math.sin(bearing * Math.PI / OneEightyDeg) * hypotenuse;
+        //                           "percentage to mark the position"
+        System.out.println("current distanc x" + currentDistanceX);
+        double totalHypotenuse = upperLeft.distanceTo(lowerRight);
+        System.out.println("total hypo" + totalHypotenuse);
+        double totalDistanceX = totalHypotenuse * Math.sin(upperLeft.bearingTo(lowerRight) * Math.PI / OneEightyDeg);
+        System.out.println("total dist" + totalDistanceX);
+        System.out.println("Image" + ImageSizeW);
+        double currentPixelX = currentDistanceX / totalDistanceX * ImageSizeW;
+
+        return currentPixelX ;
+    }
+
+    public double getYPixel(Location current){
+        double hypotenuse = upperLeft.distanceTo(current);
+        double bearing = upperLeft.bearingTo(current);
+        double currentDistanceY = Math.cos(bearing * Math.PI / OneEightyDeg) * hypotenuse;
+        //                           "percentage to mark the position"
+        double totalHypotenuse = upperLeft.distanceTo(lowerRight);
+        double totalDistanceY = totalHypotenuse * Math.cos(upperLeft.bearingTo(lowerRight) * Math.PI / OneEightyDeg);
+        double currentPixelY = currentDistanceY / totalDistanceY * ImageSizeH;
+        System.out.println("height image" + ImageSizeH);
+        return currentPixelY;
     }
 
     @Override
