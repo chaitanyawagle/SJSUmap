@@ -71,9 +71,9 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         buildingList.add(new Building(1,R.drawable.kinglibrary,R.string.kingname,R.string.kingaddress,new Coordinate(180,720),new Coordinate(304,945),R.string.kingstreetview));
         buildingList.add(new Building(2,R.drawable.engineeringbuilding,R.string.engname,R.string.kingaddress,new Coordinate(714,720),new Coordinate(918,985),R.string.engstreetview));
         buildingList.add(new Building(3,R.drawable.yoshihirouchidahall,R.string.yuhname ,R.string.yuhaddress,new Coordinate(160,1280),new Coordinate(300,1470),R.string.yuhstreetview));
-//        buildingList.add(new Building(4,R.drawable.studentunion,"Student Union","Student Union Building, San Jose, CA 95112",new Coordinate(720,1010),new Coordinate(1065,1155),"unknown "));
-//        buildingList.add(new Building(5,R.drawable.bbc, "BBC","Boccardo Business Complex, San Jose, CA 95112",new Coordinate(1110,1155),new Coordinate(1250,1280),"https://www.google.com/maps/@37.3372125,-121.8784565,3a,75y,278.88h,84.51t/data=!3m6!1e1!3m4!1sBaI2lHplpsQMZCNik6C8zQ!2e0!7i13312!8i6656"));
-//        buildingList.add(new Building(6,R.drawable.southparkinggarage,"South Parking Garage","330 South 7th Street, San Jose, CA 95112",new Coordinate(450,1710),new Coordinate(684,1915),"https://www.google.com/maps/@37.3386745,-121.8809632,3a,75y,355.98h,92.61t/data=!3m6!1e1!3m4!1s3O0i45z_Vl7Q9-as0iaIEg!2e0!7i13312!8i6656!6m1!1e1"));
+        buildingList.add(new Building(4,R.drawable.studentunion,R.string.suname,R.string.suaddress,new Coordinate(720,1010),new Coordinate(1065,1155),R.string.suaddress));
+        buildingList.add(new Building(5,R.drawable.bbc,R.string.bbcname,R.string.bbcaddress,new Coordinate(1110,1155),new Coordinate(1250,1280),R.string.bbcstreetview));
+        buildingList.add(new Building(6,R.drawable.southparkinggarage,R.string.spgname,R.string.spgaddress,new Coordinate(450,1710),new Coordinate(684,1915),R.string.spgstreetview));
 
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -154,8 +154,6 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                         startLocationUpdates();
                     }
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
 
                 } else {
 
