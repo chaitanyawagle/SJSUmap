@@ -8,4 +8,17 @@
         <item>BBC</item>
         <item>South Parking Garage</item>
     </string-array>
+
+    <string name="kingname">King Library</string>
+    <string name="kingaddress">150 East San Fernando Street, San Jose, CA 95112</string>
+    <string name="kingstreetview">https://www.google.com/maps/@37.335967,-121.8856837,3a,75y,134.01h,89t/data=!3m6!1e1!3m4!1sQWDTbzdSCqqCFL5sSO_cCg!2e0!7i13312!8i6656!6m1!1e1</string>
+
+    <string name="engname">Engineering Building</string>
+    <string name="engaddress">1 Washington Square, San Jose, CA 95112</string>
+    <string name="engstreetview">https://www.google.com/maps/@37.3377787,-121.8820119,3a,75y,146.84h,75.66t/data=!3m6!1e1!3m4!1soO4EqGCOWwLy5eXy-EKx-g!2e0!7i13312!8i6656!6m1!1e1</string>
+
+    <string name="yuhname">Yoshihiro Uchida Hall</string>
+    <string name="yuhaddress">Yoshihiro Uchida Hall, San Jose, CA 95112</string>
+    <string name="yuhstreetview">https://www.google.com/maps/@37.3335287,-121.8843338,3a,75y,63.46h,84.1t/data=!3m6!1e1!3m4!1stBY5-l3dxDZ9q003KFjVkw!2e0!7i13312!8i6656</string>
+
 </resources>

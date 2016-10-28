@@ -12,14 +12,14 @@ public class Building implements Parcelable {
 
     public Coordinate start;
     public Coordinate end;
-    public String name;
-    public String address;
+    public int name;
+    public int address;
     public int id;
     public int image;
-    public String url;
+    public int url;
     //Declare all variable related to building here.
 
-    public Building(int id,int image, String name,String address, Coordinate start, Coordinate end,String url){
+    public Building(int id,int image, int name,int address, Coordinate start, Coordinate end,int url){
         this.start = start;
         this.end = end;
         this.name = name;
@@ -39,11 +39,11 @@ public class Building implements Parcelable {
     //Methods implemented
 
     protected Building(Parcel in) {
-        name = in.readString();
-        address = in.readString();
+        name = in.readInt();
+        address = in.readInt();
         id = in.readInt();
         image = in.readInt();
-        url = in.readString();
+        url = in.readInt();
     }
 
     public static final Creator<Building> CREATOR = new Creator<Building>() {
@@ -65,10 +65,10 @@ public class Building implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(address);
+        dest.writeInt(name);
+        dest.writeInt(address);
         dest.writeInt(id);
         dest.writeInt(image);
-        dest.writeString(url);
+        dest.writeInt(url);
     }
 }

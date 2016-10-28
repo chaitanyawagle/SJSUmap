@@ -26,14 +26,14 @@ public class BuildingActivity extends AppCompatActivity {
         address = (TextView)findViewById(R.id.buildingAddress);
         buildingImage = (ImageView)findViewById(R.id.buildingImageView);
         buildingImage.setBackgroundResource(building.image);
-        name.setText(building.name);
-        address.setText(building.address);
+        name.setText(getResources().getString(building.name));
+        address.setText(getResources().getString(building.address));
         streetView = (Button)findViewById(R.id.streetView);
                 streetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse(building.url));
+                        Uri.parse(getResources().getString(building.url)));
                 startActivity(intent);
             }
         });
