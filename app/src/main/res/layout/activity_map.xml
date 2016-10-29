@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchBuilding"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/wallet_holo_blue_light"
+        android:background="@color/colorPrimary" />
 
 </RelativeLayout>
