@@ -86,10 +86,6 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         lowerRight.setLatitude(37.334602);
         lowerRight.setLongitude(-121.876608);
 
-//891,-2471
-        //1287,685
-
-
         ImageView imageView = (ImageView)findViewById(R.id.imageView);
         bmp = ((BitmapDrawable)imageView.getBackground()).getBitmap();
         ImageSizeW = 1187;
@@ -287,31 +283,32 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         double ypx = getYPixel(location);
         System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
         System.out.println("Pixel(" + ((int)xpx+105) + "," + ((int)ypx+685) + ")");
+        dotParams = new RelativeLayout.LayoutParams(100,100);
         dotParams.leftMargin = (int)xpx + 105;
         dotParams.topMargin = (int)ypx + 685;
         relativeLayout.addView(dot, dotParams);
+        dot.bringToFront();
         System.out.println("done");
-
     }
 
     public final static double OneEightyDeg = 180.0d;
     public double ImageSizeW, ImageSizeH;
 
     public double getXPixel(Location current){
-        double hypotenuse = upperLeft.distanceTo(current);
-        System.out.println("Hypo" + hypotenuse);
-        double bearing = upperLeft.bearingTo(current);
-        System.out.println("bearing" + bearing);
-        double currentDistanceX = Math.sin(bearing * Math.PI / OneEightyDeg) * hypotenuse;
-        //                           "percentage to mark the position"
-        System.out.println("current distanc x" + currentDistanceX);
-        double totalHypotenuse = upperLeft.distanceTo(lowerRight);
-        System.out.println("total hypo" + totalHypotenuse);
-        double totalDistanceX = totalHypotenuse * Math.sin(upperLeft.bearingTo(lowerRight) * Math.PI / OneEightyDeg);
-        System.out.println("total dist" + totalDistanceX);
-        System.out.println("Image" + ImageSizeW);
-        double currentPixelX = currentDistanceX / totalDistanceX * ImageSizeW;
-
+//        double hypotenuse = upperLeft.distanceTo(current);
+//        System.out.println("Hypo" + hypotenuse);
+//        double bearing = upperLeft.bearingTo(current);
+//        System.out.println("bearing" + bearing);
+//        double currentDistanceX = Math.sin(bearing * Math.PI / OneEightyDeg) * hypotenuse;
+//        //                           "percentage to mark the position"
+//        System.out.println("current distanc x" + currentDistanceX);
+//        double totalHypotenuse = upperLeft.distanceTo(lowerRight);
+//        System.out.println("total hypo" + totalHypotenuse);
+//        double totalDistanceX = totalHypotenuse * Math.sin(upperLeft.bearingTo(lowerRight) * Math.PI / OneEightyDeg);
+//        System.out.println("total dist" + totalDistanceX);
+//        System.out.println("Image" + ImageSizeW);
+//        double currentPixelX = currentDistanceX / totalDistanceX * ImageSizeW;
+        double currentPixelX = current.getLatitude() * Math.PI;
         return currentPixelX ;
     }
 
