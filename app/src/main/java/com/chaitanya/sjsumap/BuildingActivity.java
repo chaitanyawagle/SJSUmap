@@ -17,7 +17,11 @@ public class BuildingActivity extends AppCompatActivity {
     TextView address, duration;
     Button streetView;
     ImageView buildingImage;
-
+    double x = 37.334065;
+    double y = -121.880664;
+    double z = 37.335822;
+    double zz = -121.882692;
+    String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + x+","+y + "&destinations=" +z+","+zz + "&key=AIzaSyBjHXGKoV9SebN7V4XHrAoRsB7h3Ie7ZVg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,10 @@ public class BuildingActivity extends AppCompatActivity {
         address.setText(getResources().getString(building.address));
 
         duration.setText(getResources().getString(building.address));
+
+        System.out.println(url);
+
+        
 
         streetView = (Button)findViewById(R.id.streetView);
         streetView.setOnClickListener(new View.OnClickListener() {
