@@ -29,8 +29,13 @@ public class BuildingActivity extends AppCompatActivity {
         buildingImage = (ImageView)findViewById(R.id.buildingImageView);
         buildingImage.setBackgroundResource(building.image);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        duration = (TextView)findViewById(R.id.duration);
+
         getSupportActionBar().setTitle(getResources().getString(building.name));
         address.setText(getResources().getString(building.address));
+
+        duration.setText(getResources().getString(building.address));
+
         streetView = (Button)findViewById(R.id.streetView);
         streetView.setOnClickListener(new View.OnClickListener() {
             @Override
