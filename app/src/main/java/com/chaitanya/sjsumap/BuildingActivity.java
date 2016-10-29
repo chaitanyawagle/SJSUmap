@@ -35,8 +35,12 @@ public class BuildingActivity extends AppCompatActivity {
         streetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(getResources().getString(building.url)));
+            Intent intent = new Intent(BuildingActivity.this, StreetView.class);
             startActivity(intent);
+
+                /*  Intent i = new Intent(login.this, your_new_activity_name.class);
+    startActivity(i);
+*/
             }
         });
     }

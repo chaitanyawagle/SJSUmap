@@ -31,9 +31,8 @@ import com.google.android.gms.maps.GoogleMap;
 import java.util.ArrayList;
 
 
-
 public class MapActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, GoogleMap.OnMyLocationChangeListener{
+        LocationListener, GoogleMap.OnMyLocationChangeListener {
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more
@@ -70,15 +69,15 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        relativeLayout = (RelativeLayout)findViewById(R.id.mainLayout);
-        searchBuilding = (SearchView)findViewById(R.id.searchBuilding);
+        relativeLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+        searchBuilding = (SearchView) findViewById(R.id.searchBuilding);
         pin = new ImageView(MapActivity.this);
         pin.setImageResource(R.drawable.pin);
         pin.setDrawingCacheEnabled(true);
 
         dot = new ImageView(MapActivity.this);
         dot.setImageResource(R.drawable.red_dot);
-        dotParams = new RelativeLayout.LayoutParams(50,50);
+        dotParams = new RelativeLayout.LayoutParams(50, 50);
 
         upperLeft.setLatitude(37.335813);
         upperLeft.setLongitude(-121.885899);
@@ -86,31 +85,31 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         lowerRight.setLatitude(37.334602);
         lowerRight.setLongitude(-121.876608);
 
-        ImageView imageView = (ImageView)findViewById(R.id.imageView);
-        bmp = ((BitmapDrawable)imageView.getBackground()).getBitmap();
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        bmp = ((BitmapDrawable) imageView.getBackground()).getBitmap();
         ImageSizeW = 1187;
         ImageSizeH = 1275;
         //Adding Building as per list given by professor
         //Order is same as the list
 
-        buildingList.add(new Building(1,R.drawable.kinglibrary,R.string.kingname,R.string.kingaddress,new Coordinate(180,720),new Coordinate(304,945),R.string.kingstreetview));
-        buildingList.add(new Building(2,R.drawable.engineeringbuilding,R.string.engname,R.string.kingaddress,new Coordinate(714,720),new Coordinate(918,985),R.string.engstreetview));
-        buildingList.add(new Building(3,R.drawable.yoshihirouchidahall,R.string.yuhname ,R.string.yuhaddress,new Coordinate(160,1280),new Coordinate(300,1470),R.string.yuhstreetview));
-        buildingList.add(new Building(4,R.drawable.studentunion,R.string.suname,R.string.suaddress,new Coordinate(720,1010),new Coordinate(1065,1155),R.string.sustreetview));
-        buildingList.add(new Building(5,R.drawable.bbc, R.string.bbcname,R.string.bbcaddress,new Coordinate(1110,1155),new Coordinate(1250,1280),R.string.sustreetview));
-        buildingList.add(new Building(6,R.drawable.southparkinggarage,R.string.spgname,R.string.spgaddress,new Coordinate(450,1710),new Coordinate(684,1915),R.string.spgstreetview));
+        buildingList.add(new Building(1, R.drawable.kinglibrary, R.string.kingname, R.string.kingaddress, new Coordinate(180, 720), new Coordinate(304, 945), R.string.kingstreetview));
+        buildingList.add(new Building(2, R.drawable.engineeringbuilding, R.string.engname, R.string.kingaddress, new Coordinate(714, 720), new Coordinate(918, 985), R.string.engstreetview));
+        buildingList.add(new Building(3, R.drawable.yoshihirouchidahall, R.string.yuhname, R.string.yuhaddress, new Coordinate(160, 1280), new Coordinate(300, 1470), R.string.yuhstreetview));
+        buildingList.add(new Building(4, R.drawable.studentunion, R.string.suname, R.string.suaddress, new Coordinate(720, 1010), new Coordinate(1065, 1155), R.string.sustreetview));
+        buildingList.add(new Building(5, R.drawable.bbc, R.string.bbcname, R.string.bbcaddress, new Coordinate(1110, 1155), new Coordinate(1250, 1280), R.string.sustreetview));
+        buildingList.add(new Building(6, R.drawable.southparkinggarage, R.string.spgname, R.string.spgaddress, new Coordinate(450, 1710), new Coordinate(684, 1915), R.string.spgstreetview));
 
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("(" + ((int)event.getX() - v.getLeft()) + "," + ((int)event.getY()- v.getTop()) + ")");
-                for(Building building: buildingList){
-                    if(building.checkTouch((int)event.getX() - v.getLeft(),(int)event.getY()- v.getTop())){
+                System.out.println("(" + ((int) event.getX() - v.getLeft()) + "," + ((int) event.getY() - v.getTop()) + ")");
+                for (Building building : buildingList) {
+                    if (building.checkTouch((int) event.getX() - v.getLeft(), (int) event.getY() - v.getTop())) {
                         try {
                             Intent buildingIntent = new Intent(MapActivity.this, Class.forName("com.chaitanya.sjsumap.BuildingActivity"));
-                            buildingIntent.putExtra("building",building);
+                            buildingIntent.putExtra("building", building);
                             startActivity(buildingIntent);
-                        }catch (ClassNotFoundException e){
+                        } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
@@ -122,11 +121,11 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         searchBuilding.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                for(Building building: buildingList){
-                    if((getResources().getString(building.name).contains(query)) && query != null){
-                        if(relativeLayout.indexOfChild(pin) != 0)
+                for (Building building : buildingList) {
+                    if ((getResources().getString(building.name).contains(query)) && query != null) {
+                        if (relativeLayout.indexOfChild(pin) != 0)
                             relativeLayout.removeView(pin);
-                        pinParams = new RelativeLayout.LayoutParams(100,100);
+                        pinParams = new RelativeLayout.LayoutParams(100, 100);
                         //((building.start.x + building.end.x)/2) - building.start.x
 //                        ((building.start.y + building.end.y)/2) - building.start.y
                         pinParams.leftMargin = building.start.x;
@@ -140,8 +139,8 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText.equals("")){
-                    if(relativeLayout.indexOfChild(pin) != 0)
+                if (newText.equals("")) {
+                    if (relativeLayout.indexOfChild(pin) != 0)
                         relativeLayout.removeView(pin);
                 }
                 return false;
@@ -153,9 +152,9 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                        1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
         } else {
             buildGoogleApiClient();
             mGoogleApiClient.connect();
@@ -173,8 +172,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                     buildGoogleApiClient();
                     mGoogleApiClient.connect();
 
-                    if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
-                    {
+                    if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                         startLocationUpdates();
                     }
 
@@ -200,8 +198,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     protected void onResume() {
         super.onResume();
 
-        if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
-        {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             startLocationUpdates();
         }
     }
@@ -210,7 +207,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     protected void onStop() {
         super.onStop();
 
-        if(mGoogleApiClient!=null && mGoogleApiClient.isConnected())
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
             mGoogleApiClient.disconnect();
     }
 
@@ -245,6 +242,26 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         // The final argument to {@code requestLocationUpdates()} is a
         // LocationListener
         // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
     }
@@ -254,6 +271,16 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     @Override
     public void onConnected(Bundle connectionHint) {
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         lastKnownLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 
