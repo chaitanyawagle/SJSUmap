@@ -17,50 +17,60 @@
     />
 
     <LinearLayout
+        android:layout_below="@+id/buildingImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:weightSum="1"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:id="@+id/buildingAddressLL"
+        android:layout_marginTop="60px">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fll"
-            android:layout_weight="0.4"
-            android:orientation="vertical">
-        </LinearLayout>
+            <ImageButton
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:background="@drawable/address"
+                android:scaleType="fitXY"
+                />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/sll"
-            android:orientation="vertical"
-            android:layout_weight="0.6">
-        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/buildingAddress"
+                android:layout_below="@+id/buildingImageView"
+                android:layout_margin="30px"
+                android:layout_gravity="center_vertical"/>
+
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="bottom|center|right"
-        android:layout_alignBottom="@+id/buildingImageView"
-        android:layout_alignEnd="@+id/buildingImageView" />
-
-    <TextView
+    <LinearLayout
+        android:layout_below="@+id/buildingAddressLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:layout_below="@+id/buildingImageView"
-        android:id="@+id/buildingAddress"/>
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:id="@+id/durationLL"
+        android:layout_marginTop="60px">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:layout_below="@+id/buildingAddress"
-        android:id="@+id/duration"/>
+        <ImageButton
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:background="@drawable/duration"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/duration"
+            android:layout_marginLeft="30px"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -68,4 +78,5 @@
         android:text="Street View"
         android:id="@+id/streetView"
         android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
