@@ -14,43 +14,53 @@
         android:layout_height="200dp"
         android:id="@+id/buildingImageView"
         android:layout_alignParentTop="true"
-         />
-
+    />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fll"
+            android:layout_weight="0.4"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sll"
+            android:orientation="vertical"
+            android:layout_weight="0.6">
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="bottom|center|right"
+        android:layout_alignBottom="@+id/buildingImageView"
+        android:layout_alignEnd="@+id/buildingImageView" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
         android:layout_below="@+id/buildingImageView"
-        android:id="@+id/buildingDetails">
+        android:id="@+id/buildingAddress"/>
 
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/buildingName"
-            android:layout_alignBottom="@+id/buildingImageView"
-            android:gravity="center_vertical|center_horizontal"
-             />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/buildingAddress" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/duration" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:layout_below="@+id/buildingAddress"
+        android:id="@+id/duration"/>
 
     <Button
         android:layout_width="match_parent"
