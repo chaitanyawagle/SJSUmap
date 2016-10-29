@@ -108,6 +108,8 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                         try {
                             Intent buildingIntent = new Intent(MapActivity.this, Class.forName("com.chaitanya.sjsumap.BuildingActivity"));
                             buildingIntent.putExtra("building", building);
+                            buildingIntent.putExtra("currLatitude",lastKnownLocation.getLatitude());
+                            buildingIntent.putExtra("currLongitude",lastKnownLocation.getLongitude());
                             startActivity(buildingIntent);
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
@@ -267,6 +269,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     Location lastKnownLocation;
+
 
     @Override
     public void onConnected(Bundle connectionHint) {

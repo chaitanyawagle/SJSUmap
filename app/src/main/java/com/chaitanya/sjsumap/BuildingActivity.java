@@ -29,6 +29,8 @@ public class BuildingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building);
         Intent iBuilding = getIntent();
         final Building building = (Building)iBuilding.getParcelableExtra("building");
+        x = iBuilding.getDoubleExtra("currLatitude",37.334065);
+        y = iBuilding.getDoubleExtra("currLongitude",-121.880664);
         address = (TextView)findViewById(R.id.buildingAddress);
         buildingImage = (ImageView)findViewById(R.id.buildingImageView);
         buildingImage.setBackgroundResource(building.image);
@@ -41,8 +43,6 @@ public class BuildingActivity extends AppCompatActivity {
         duration.setText(getResources().getString(building.address));
 
         System.out.println(url);
-
-        
 
         streetView = (Button)findViewById(R.id.streetView);
         streetView.setOnClickListener(new View.OnClickListener() {
