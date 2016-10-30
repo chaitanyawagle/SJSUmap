@@ -55,6 +55,10 @@ public class BuildingActivity extends AppCompatActivity {
         final Building building = (Building) iBuilding.getParcelableExtra("building");
         x = iBuilding.getDoubleExtra("currLatitude", 37.334065);
         y = iBuilding.getDoubleExtra("currLongitude", -121.880664);
+
+        z = building.blat;
+        zz = building.blon;
+
         address = (TextView) findViewById(R.id.buildingAddress);
         buildingImage = (ImageView) findViewById(R.id.buildingImageView);
         buildingImage.setBackgroundResource(building.image);

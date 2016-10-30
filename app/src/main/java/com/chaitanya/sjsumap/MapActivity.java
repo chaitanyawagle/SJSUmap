@@ -92,12 +92,12 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
         //Adding Building as per list given by professor
         //Order is same as the list
 
-        buildingList.add(new Building(1, R.drawable.kinglibrary, R.string.kingname, R.string.kingaddress, new Coordinate(180, 720), new Coordinate(304, 945), R.string.kingstreetview));
-        buildingList.add(new Building(2, R.drawable.engineeringbuilding, R.string.engname, R.string.kingaddress, new Coordinate(714, 720), new Coordinate(918, 985), R.string.engstreetview));
-        buildingList.add(new Building(3, R.drawable.yoshihirouchidahall, R.string.yuhname, R.string.yuhaddress, new Coordinate(160, 1280), new Coordinate(300, 1470), R.string.yuhstreetview));
-        buildingList.add(new Building(4, R.drawable.studentunion, R.string.suname, R.string.suaddress, new Coordinate(720, 1010), new Coordinate(1065, 1155), R.string.sustreetview));
-        buildingList.add(new Building(5, R.drawable.bbc, R.string.bbcname, R.string.bbcaddress, new Coordinate(1110, 1155), new Coordinate(1250, 1280), R.string.sustreetview));
-        buildingList.add(new Building(6, R.drawable.southparkinggarage, R.string.spgname, R.string.spgaddress, new Coordinate(450, 1710), new Coordinate(684, 1915), R.string.spgstreetview));
+        buildingList.add(new Building(1, R.drawable.kinglibrary, R.string.kingname, R.string.kingaddress, new Coordinate(180, 720), new Coordinate(304, 945), R.string.kingstreetview,37.335507,-121.884999));
+        buildingList.add(new Building(2, R.drawable.engineeringbuilding, R.string.engname, R.string.kingaddress, new Coordinate(714, 720), new Coordinate(918, 985), R.string.engstreetview,37.335142,-121.881276));
+        buildingList.add(new Building(3, R.drawable.yoshihirouchidahall, R.string.yuhname, R.string.yuhaddress, new Coordinate(160, 1280), new Coordinate(300, 1470), R.string.yuhstreetview,-121.879916,-121.879916));
+        buildingList.add(new Building(4, R.drawable.studentunion, R.string.suname, R.string.suaddress, new Coordinate(720, 1010), new Coordinate(1065, 1155), R.string.sustreetview,37.424197,-122.170939));
+        buildingList.add(new Building(5, R.drawable.bbc, R.string.bbcname, R.string.bbcaddress, new Coordinate(1110, 1155), new Coordinate(1250, 1280), R.string.sustreetview,37.336561,-121.878723));
+        buildingList.add(new Building(6, R.drawable.southparkinggarage, R.string.spgname, R.string.spgaddress, new Coordinate(450, 1710), new Coordinate(684, 1915), R.string.spgstreetview,37.333474,-121.879916));
 
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
