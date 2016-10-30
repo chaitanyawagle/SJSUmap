@@ -26,6 +26,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:7+'
     compile 'com.google.android.gms:play-services:7+'
     compile 'com.android.support:design:23.1.0'
+// https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp
+    compile group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
 
     compile 'com.google.android.gms:play-services:9.0.0'
 }

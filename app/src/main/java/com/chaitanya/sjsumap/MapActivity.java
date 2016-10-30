@@ -108,8 +108,8 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                         try {
                             Intent buildingIntent = new Intent(MapActivity.this, Class.forName("com.chaitanya.sjsumap.BuildingActivity"));
                             buildingIntent.putExtra("building", building);
-                            buildingIntent.putExtra("currLatitude",lastKnownLocation.getLatitude());
-                            buildingIntent.putExtra("currLongitude",lastKnownLocation.getLongitude());
+                            buildingIntent.putExtra("currLatitude", lastKnownLocation.getLatitude());
+                            buildingIntent.putExtra("currLongitude", lastKnownLocation.getLongitude());
                             startActivity(buildingIntent);
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
@@ -241,19 +241,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     protected void startLocationUpdates() {
-        // The final argument to {@code requestLocationUpdates()} is a
-        // LocationListener
-        // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -273,6 +261,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
     @Override
     public void onConnected(Bundle connectionHint) {
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -310,6 +299,9 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
     @Override
     public void onLocationChanged(Location location) {
+
+        lastKnownLocation = location;
+
         if(relativeLayout.indexOfChild(dot) != 0){
             relativeLayout.removeView(dot);
         }
