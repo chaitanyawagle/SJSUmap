@@ -10,6 +10,15 @@
     android:id="@+id/mainLayout"
     tools:context="com.chaitanya.sjsumap.MapActivity">
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/getLocation"
+        android:background="@drawable/address"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
