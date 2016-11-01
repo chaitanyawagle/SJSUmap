@@ -1,15 +1,8 @@
 <resources>
     <string name="app_name">SJSU Map</string>
-    <string-array name="array_sjsu">
-        <item>King Library</item>
-        <item>Engineering Building</item>
-        <item>Yoshihiro Uchida Hall</item>
-        <item>Student Union</item>
-        <item>BBC</item>
-        <item>South Parking Garage</item>
-    </string-array>
 
     <string name="kingname">King Library</string>
+    <string name="kingabb">MLK</string>
     <string name="kingaddress">150 East San Fernando Street, San Jose, CA 95112</string>
     <string name="kingstreetview">https://www.google.com/maps/@37.335967,-121.8856837,3a,75y,134.01h,89t/data=!3m6!1e1!3m4!1sQWDTbzdSCqqCFL5sSO_cCg!2e0!7i13312!8i6656!6m1!1e1</string>
     <string name="kinglon"></string>
@@ -17,30 +10,35 @@
 
 
     <string name="engname">Engineering Building</string>
+    <string name="engabb">ENG</string>
     <string name="engaddress">1 Washington Square, San Jose, CA 95112</string>
     <string name="engstreetview">https://www.google.com/maps/@37.3377787,-121.8820119,3a,75y,146.84h,75.66t/data=!3m6!1e1!3m4!1soO4EqGCOWwLy5eXy-EKx-g!2e0!7i13312!8i6656!6m1!1e1</string>
     <string name="englon"></string>
     <string name="englat"></string>
 
     <string name="yuhname">Yoshihiro Uchida Hall</string>
+    <string name="yuhabb">YUH</string>
     <string name="yuhaddress">Yoshihiro Uchida Hall, San Jose, CA 95112</string>
     <string name="yuhstreetview">https://www.google.com/maps/@37.3335287,-121.8843338,3a,75y,63.46h,84.1t/data=!3m6!1e1!3m4!1stBY5-l3dxDZ9q003KFjVkw!2e0!7i13312!8i6656</string>
     <string name="yuhlon"></string>
     <string name="yuhlat"></string>
 
     <string name="suname">Student Union</string>
+    <string name="suabb">SU</string>
     <string name="suaddress">Student Union Building, San Jose, CA 95112</string>
     <string name="sustreetview"></string>
     <string name="sulon"></string>
     <string name="sulat"></string>
 
     <string name="bbcname">BBC</string>
+    <string name="bbcabb">BBC</string>
     <string name="bbcaddress">Boccardo Business Complex, San Jose, CA 95112</string>
     <string name="bbcstreet">https://www.google.com/maps/@37.3372125,-121.8784565,3a,75y,278.88h,84.51t/data=!3m6!1e1!3m4!1sBaI2lHplpsQMZCNik6C8zQ!2e0!7i13312!8i6656</string>
     <string name="bbclon"></string>
     <string name="bbclat"></string>
 
     <string name="spgname">South Parking Garage</string>
+    <string name="spgabb">SPG</string>
     <string name="spgaddress">330 South 7th Street, San Jose, CA 95112</string>
     <string name="spgstreetview">https://www.google.com/maps/@37.3386745,-121.8809632,3a,75y,355.98h,92.61t/data=!3m6!1e1!3m4!1s3O0i45z_Vl7Q9-as0iaIEg!2e0!7i13312!8i6656!6m1!1e1</string>
     <string name="spglon"></string>

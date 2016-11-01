@@ -19,13 +19,15 @@ public class Building implements Parcelable {
     public int url;
     public double blat;
     public double blon;
+    public int abbreviation;
 
     //Declare all variable related to building here.
 
-    public Building(int id,int image, int name,int address, Coordinate start, Coordinate end,int url, double blat, double blon){
+    public Building(int id,int image, int name,int abbreviation,int address, Coordinate start, Coordinate end,int url, double blat, double blon){
         this.start = start;
         this.end = end;
         this.name = name;
+        this.abbreviation = abbreviation;
         this.address = address;
         this.id = id;
         this.image = image;
@@ -45,6 +47,7 @@ public class Building implements Parcelable {
 
     protected Building(Parcel in) {
         name = in.readInt();
+        abbreviation = in.readInt();
         address = in.readInt();
         id = in.readInt();
         image = in.readInt();
@@ -73,6 +76,7 @@ public class Building implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(name);
+        dest.writeInt(abbreviation);
         dest.writeInt(address);
         dest.writeInt(id);
         dest.writeInt(image);

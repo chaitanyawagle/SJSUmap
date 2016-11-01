@@ -1,6 +1,5 @@
 package com.chaitanya.sjsumap;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,29 +20,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
-//import com.google.android.gms.common.api.GoogleApiClient;
-
-//import com.google.android.gms.location.LocationRequest;
-
 import java.util.ArrayList;
 
 
 public class MapActivity extends AppCompatActivity {
-
-    /**
-     * The desired interval for location updates. Inexact. Updates may be more
-     * or less frequent.
-     */
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    /**
-     * The fastest rate for active location updates. Exact. Updates will never
-     * be more frequent than this value.
-     */
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-
-//    protected GoogleApiClient mGoogleApiClient;
-//
-//    protected LocationRequest ?mLocationRequest;
 
     RelativeLayout relativeLayout;
     ArrayList<Building> buildingList = new ArrayList<Building>();
@@ -68,16 +46,13 @@ public class MapActivity extends AppCompatActivity {
     Location userLocation;
     Location currentLocation;
 
-    double ImageSizeW;
-    double ImageSizeH;
+    double ImageSizeW = 1427;
+    double ImageSizeH = 2095;
 
     double campusWidth;
     double campusHeight;
 
     Bitmap bmp;
-    //(110,680) -> (37.335813, -121.885899)
-    //(1297,1960) -> (37.334602, -121.876608)
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -91,6 +66,7 @@ public class MapActivity extends AppCompatActivity {
 
         dot = new ImageView(MapActivity.this);
         dot.setImageResource(R.drawable.red_dot);
+        dot.setDrawingCacheEnabled(true);
         dotParams = new RelativeLayout.LayoutParams(50, 50);
 
         upperLeft.setLatitude(37.335813);
@@ -110,18 +86,15 @@ public class MapActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         bmp = ((BitmapDrawable) imageView.getBackground()).getBitmap();
-        ImageSizeW = 1300;
-        ImageSizeH = 1500;
+
         //Adding Building as per list given by professor
         //Order is same as the list
-
-        buildingList.add(new Building(1, R.drawable.kinglibrary, R.string.kingname, R.string.kingaddress, new Coordinate(180, 720), new Coordinate(304, 945), R.string.kingstreetview, 37.335507, -121.884999));
-        buildingList.add(new Building(2, R.drawable.engineeringbuilding, R.string.engname, R.string.kingaddress, new Coordinate(714, 720), new Coordinate(918, 985), R.string.engstreetview, 37.337317, -121.882306));
-        buildingList.add(new Building(3, R.drawable.yoshihirouchidahall, R.string.yuhname, R.string.yuhaddress, new Coordinate(160, 1280), new Coordinate(300, 1470), R.string.yuhstreetview, 37.3338, -121.8834));
-        buildingList.add(new Building(4, R.drawable.studentunion, R.string.suname, R.string.suaddress, new Coordinate(720, 1010), new Coordinate(1065, 1155), R.string.sustreetview, 37.336216, -121.881373));
-        buildingList.add(new Building(5, R.drawable.bbc, R.string.bbcname, R.string.bbcaddress, new Coordinate(1110, 1155), new Coordinate(1250, 1280), R.string.sustreetview, 37.337086, -121.878755));
-        buildingList.add(new Building(6, R.drawable.southparkinggarage, R.string.spgname, R.string.spgaddress, new Coordinate(450, 1710), new Coordinate(684, 1915), R.string.spgstreetview, 37.333195, -121.880096));
-
+        buildingList.add(new Building(1, R.drawable.kinglibrary, R.string.kingname,R.string.kingabb, R.string.kingaddress, new Coordinate(180, 720), new Coordinate(304, 945), R.string.kingstreetview, 37.335507, -121.884999));
+        buildingList.add(new Building(2, R.drawable.engineeringbuilding, R.string.engname,R.string.engabb, R.string.engaddress, new Coordinate(714, 720), new Coordinate(918, 985), R.string.engstreetview, 37.337317, -121.882306));
+        buildingList.add(new Building(3, R.drawable.yoshihirouchidahall, R.string.yuhname,R.string.yuhabb, R.string.yuhaddress, new Coordinate(160, 1280), new Coordinate(300, 1470), R.string.yuhstreetview, 37.3338, -121.8834));
+        buildingList.add(new Building(4, R.drawable.studentunion, R.string.suname, R.string.suabb, R.string.suaddress, new Coordinate(720, 1010), new Coordinate(1065, 1155), R.string.sustreetview, 37.336216, -121.881373));
+        buildingList.add(new Building(5, R.drawable.bbc, R.string.bbcname, R.string.bbcabb, R.string.bbcaddress, new Coordinate(1110, 1155), new Coordinate(1250, 1280), R.string.sustreetview, 37.337086, -121.878755));
+        buildingList.add(new Building(6, R.drawable.southparkinggarage, R.string.spgname, R.string.spgabb, R.string.spgaddress, new Coordinate(450, 1710), new Coordinate(684, 1915), R.string.spgstreetview, 37.333195, -121.880096));
 
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -150,7 +123,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 for (Building building : buildingList) {
-                    if ((getResources().getString(building.name).contains(query)) && query != null) {
+                    if ((getResources().getString(building.name).toUpperCase().contains(query.toUpperCase())) || (getResources().getString(building.abbreviation).toUpperCase().contains(query.toUpperCase())) && !query.equals("")) {
                         if (relativeLayout.indexOfChild(pin) != 0)
                             relativeLayout.removeView(pin);
                         pinParams = new RelativeLayout.LayoutParams(100, 100);
@@ -178,56 +151,47 @@ public class MapActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        userLocation = location;
-                        if (relativeLayout.indexOfChild(dot) != 0) {
-                            relativeLayout.removeView(dot);
-                        }
-                        double translate = (Math.pow(Math.abs(upperLeft.distanceTo(location)), 2) + Math.pow(Math.abs(lowerLeft.distanceTo(location)), 2) + Math.pow(Math.abs(campusHeight), 2)) / (2 * campusHeight);
-                        double xpx = getXPixel(location, translate);
-                        double ypx = getYPixel(location, translate);
-                        System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
-                        System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
-                        dotParams = new RelativeLayout.LayoutParams(100, 100);
-                        dotParams.leftMargin = (int) xpx + 105;
-                        dotParams.topMargin = (int) ypx + 685;
-                        relativeLayout.addView(dot, dotParams);
-                        dot.bringToFront();
-                        System.out.println("done");
-                    }
+                if(currentLocation == null){
+                    currentLocation = new Location("");
+                    currentLocation.setLatitude(37.335813);
+                    currentLocation.setLongitude(-121.885899);
+                }
+                if (relativeLayout.indexOfChild(dot) != 0) {
+                    relativeLayout.removeView(dot);
+                }
+                double k = Math.abs(upperLeft.distanceTo(currentLocation));
+                System.out.println("k = " + k);
 
-                    public double getXPixel(Location location, double translate) {
-                        return (Math.sqrt(Math.abs(Math.pow(Math.abs(upperLeft.distanceTo(location)), 2)) - Math.pow(translate, 2))) * ImageSizeW / campusWidth;
-                    }
+                double m = Math.abs(lowerLeft.distanceTo(currentLocation));
+                System.out.println("m = " + m);
 
-                    public double getYPixel(Location current, double translate) {
-                        return translate * ImageSizeH / campusHeight;
-                    }
+                double n = Math.abs(campusHeight);
+                System.out.println("n = " + n);
 
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                double x = (Math.pow(k,2) - Math.pow(m,2) + Math.pow(n,2)) / (2 * n);
+                System.out.println("x = " + x);
 
-                    }
+                double widthCurrent = Math.sqrt(Math.abs(Math.pow(k,2)-Math.pow(x,2)));
+                System.out.println("widthCurrent = " + widthCurrent);
 
-                    @Override
-                    public void onProviderEnabled(String provider) {
+                double xpx = widthCurrent * ImageSizeW / campusWidth;
+                System.out.println("xpx = " + xpx);
 
-                    }
+                double ypx = x * ImageSizeH / campusHeight;
+                System.out.println("ypx = " + ypx);
 
-                    @Override
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                };
+                System.out.println("Current(" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() + ")");
+                System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
+                dotParams = new RelativeLayout.LayoutParams(100, 100);
+                dotParams.leftMargin = (int) xpx + 105;
+                dotParams.topMargin = (int) ypx + 685;
+                relativeLayout.addView(dot, dotParams);
+                dot.bringToFront();
+                System.out.println("done");
             }
         });
-//
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-                listener = new LocationListener() {
+
+        listener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
                         userLocation = location;
@@ -255,10 +219,6 @@ public class MapActivity extends AppCompatActivity {
                         double ypx = x * ImageSizeH / campusHeight;
                         System.out.println("ypx = " + ypx);
 
-                        //double translate = (Math.pow(Math.abs(upperLeft.distanceTo(location)), 2) + Math.pow(), 2) + Math.pow(Math.abs(campusHeight), 2)) / (2 * campusHeight);
-                        //double xpx = getXPixel(location, translate);
-                        //double ypx = getYPixel(location, translate);
-
                         System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
                         System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
                         dotParams = new RelativeLayout.LayoutParams(100, 100);
@@ -292,38 +252,13 @@ public class MapActivity extends AppCompatActivity {
 
                     }
                 };
-//            }
-//        });
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         System.out.println("Ia m here");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(currentLocation != null){
-            System.out.println(currentLocation.toString());
-        }else{
-            System.out.println("null");
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                }
-                return;
-        }
     }
 }
