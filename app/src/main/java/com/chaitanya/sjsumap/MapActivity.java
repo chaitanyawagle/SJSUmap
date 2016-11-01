@@ -46,8 +46,8 @@ public class MapActivity extends AppCompatActivity {
     Location userLocation;
     Location currentLocation;
 
-    double ImageSizeW = 1427;
-    double ImageSizeH = 2095;
+    double ImageSizeW = 1200;
+    double ImageSizeH = 1275;
 
     double campusWidth;
     double campusHeight;
@@ -159,25 +159,25 @@ public class MapActivity extends AppCompatActivity {
                 if (relativeLayout.indexOfChild(dot) != 0) {
                     relativeLayout.removeView(dot);
                 }
-                double k = Math.abs(upperLeft.distanceTo(currentLocation));
-                System.out.println("k = " + k);
+                double a = Math.abs(upperLeft.distanceTo(currentLocation));
+                System.out.println("a = " + a);
 
-                double m = Math.abs(lowerLeft.distanceTo(currentLocation));
-                System.out.println("m = " + m);
+                double b = Math.abs(lowerLeft.distanceTo(currentLocation));
+                System.out.println("b = " + b);
 
-                double n = Math.abs(campusHeight);
-                System.out.println("n = " + n);
+                double c = Math.abs(campusHeight);
+                System.out.println("c = " + c);
 
-                double x = (Math.pow(k,2) - Math.pow(m,2) + Math.pow(n,2)) / (2 * n);
-                System.out.println("x = " + x);
+                double area = Math.sqrt((a+b+c)/2);
+                double altitude = (2 * area) / c;
 
-                double widthCurrent = Math.sqrt(Math.abs(Math.pow(k,2)-Math.pow(x,2)));
-                System.out.println("widthCurrent = " + widthCurrent);
+                double locationHeigth = Math.sqrt(Math.pow(a,2) - Math.pow(altitude,2));
+                double locationWidth = altitude;
 
-                double xpx = widthCurrent * ImageSizeW / campusWidth;
+                double xpx = locationWidth * ImageSizeW / campusWidth;
+                double ypx = locationHeigth * ImageSizeH / campusHeight;
+
                 System.out.println("xpx = " + xpx);
-
-                double ypx = x * ImageSizeH / campusHeight;
                 System.out.println("ypx = " + ypx);
 
                 System.out.println("Current(" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() + ")");
@@ -198,25 +198,25 @@ public class MapActivity extends AppCompatActivity {
                         if (relativeLayout.indexOfChild(dot) != 0) {
                             relativeLayout.removeView(dot);
                         }
-                        double k = Math.abs(upperLeft.distanceTo(location));
-                        System.out.println("k = " + k);
+                        double a = Math.abs(upperLeft.distanceTo(location));
+                        System.out.println("k = " + a);
 
-                        double m = Math.abs(lowerLeft.distanceTo(location));
-                        System.out.println("m = " + m);
+                        double b = Math.abs(lowerLeft.distanceTo(location));
+                        System.out.println("m = " + b);
 
-                        double n = Math.abs(campusHeight);
-                        System.out.println("n = " + n);
+                        double c = Math.abs(campusHeight);
+                        System.out.println("n = " + c);
 
-                        double x = (Math.pow(k,2) - Math.pow(m,2) + Math.pow(n,2)) / (2 * n);
-                        System.out.println("x = " + x);
+                        double area = Math.sqrt((a+b+c)/2);
+                        double altitude = (2 * area) / c;
 
-                        double widthCurrent = Math.sqrt(Math.abs(Math.pow(k,2)-Math.pow(x,2)));
-                        System.out.println("widthCurrent = " + widthCurrent);
+                        double locationHeigth = Math.sqrt(Math.pow(a,2) - Math.pow(altitude,2));
+                        double locationWidth = altitude;
 
-                        double xpx = widthCurrent * ImageSizeW / campusWidth;
+                        double xpx = locationWidth * ImageSizeW / campusWidth;
+                        double ypx = locationHeigth * ImageSizeH / campusHeight;
+
                         System.out.println("xpx = " + xpx);
-
-                        double ypx = x * ImageSizeH / campusHeight;
                         System.out.println("ypx = " + ypx);
 
                         System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");

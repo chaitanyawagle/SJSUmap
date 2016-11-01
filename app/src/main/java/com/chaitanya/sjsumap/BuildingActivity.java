@@ -263,13 +263,6 @@ public class BuildingActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
-
         }
     }
-
-
-
-
 }
