@@ -70,6 +70,10 @@ public class MapActivity extends AppCompatActivity {
 
     double ImageSizeW;
     double ImageSizeH;
+
+    double campusWidth;
+    double campusHeight;
+
     Bitmap bmp;
     //(110,680) -> (37.335813, -121.885899)
     //(1297,1960) -> (37.334602, -121.876608)
@@ -101,13 +105,13 @@ public class MapActivity extends AppCompatActivity {
         lowerRight.setLatitude(37.331550);
         lowerRight.setLongitude(-121.882851);
 
-        final double campusWidth = upperLeft.distanceTo(upperRight);
-        final double campusHeight = upperLeft.distanceTo(lowerLeft);
+        campusWidth = upperLeft.distanceTo(upperRight);
+        campusHeight = upperLeft.distanceTo(lowerLeft);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         bmp = ((BitmapDrawable) imageView.getBackground()).getBitmap();
-        ImageSizeW = relativeLayout.getWidth();
-        ImageSizeH = relativeLayout.getHeight();
+        ImageSizeW = 1300;
+        ImageSizeH = 1500;
         //Adding Building as per list given by professor
         //Order is same as the list
 
@@ -171,62 +175,145 @@ public class MapActivity extends AppCompatActivity {
 
         imageButton = (ImageButton) findViewById(R.id.getLocation);
         imageButton.bringToFront();
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        userLocation = location;
+                        if (relativeLayout.indexOfChild(dot) != 0) {
+                            relativeLayout.removeView(dot);
+                        }
+                        double translate = (Math.pow(Math.abs(upperLeft.distanceTo(location)), 2) + Math.pow(Math.abs(lowerLeft.distanceTo(location)), 2) + Math.pow(Math.abs(campusHeight), 2)) / (2 * campusHeight);
+                        double xpx = getXPixel(location, translate);
+                        double ypx = getYPixel(location, translate);
+                        System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
+                        System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
+                        dotParams = new RelativeLayout.LayoutParams(100, 100);
+                        dotParams.leftMargin = (int) xpx + 105;
+                        dotParams.topMargin = (int) ypx + 685;
+                        relativeLayout.addView(dot, dotParams);
+                        dot.bringToFront();
+                        System.out.println("done");
+                    }
+
+                    public double getXPixel(Location location, double translate) {
+                        return (Math.sqrt(Math.abs(Math.pow(Math.abs(upperLeft.distanceTo(location)), 2)) - Math.pow(translate, 2))) * ImageSizeW / campusWidth;
+                    }
+
+                    public double getYPixel(Location current, double translate) {
+                        return translate * ImageSizeH / campusHeight;
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                };
+            }
+        });
+//
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+                listener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        userLocation = location;
+                        if (relativeLayout.indexOfChild(dot) != 0) {
+                            relativeLayout.removeView(dot);
+                        }
+                        double k = Math.abs(upperLeft.distanceTo(location));
+                        System.out.println("k = " + k);
+
+                        double m = Math.abs(lowerLeft.distanceTo(location));
+                        System.out.println("m = " + m);
+
+                        double n = Math.abs(campusHeight);
+                        System.out.println("n = " + n);
+
+                        double x = (Math.pow(k,2) - Math.pow(m,2) + Math.pow(n,2)) / (2 * n);
+                        System.out.println("x = " + x);
+
+                        double widthCurrent = Math.sqrt(Math.abs(Math.pow(k,2)-Math.pow(x,2)));
+                        System.out.println("widthCurrent = " + widthCurrent);
+
+                        double xpx = widthCurrent * ImageSizeW / campusWidth;
+                        System.out.println("xpx = " + xpx);
+
+                        double ypx = x * ImageSizeH / campusHeight;
+                        System.out.println("ypx = " + ypx);
+
+                        //double translate = (Math.pow(Math.abs(upperLeft.distanceTo(location)), 2) + Math.pow(), 2) + Math.pow(Math.abs(campusHeight), 2)) / (2 * campusHeight);
+                        //double xpx = getXPixel(location, translate);
+                        //double ypx = getYPixel(location, translate);
+
+                        System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
+                        System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
+                        dotParams = new RelativeLayout.LayoutParams(100, 100);
+                        dotParams.leftMargin = (int) xpx + 105;
+                        dotParams.topMargin = (int) ypx + 685;
+                        relativeLayout.addView(dot, dotParams);
+                        dot.bringToFront();
+                        System.out.println("done");
+                    }
+
+                    public double getXPixel(Location location, double translate) {
+                        return (Math.sqrt(Math.abs(Math.pow(Math.abs(upperLeft.distanceTo(location)), 2)) - Math.pow(translate, 2))) * ImageSizeW / campusWidth;
+                    }
+
+                    public double getYPixel(Location current, double translate) {
+                        return translate * ImageSizeH / campusHeight;
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                };
+//            }
+//        });
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                userLocation = location;
-                if (relativeLayout.indexOfChild(dot) != 0) {
-                    relativeLayout.removeView(dot);
-                }
-                double translate = (Math.pow(Math.abs(upperLeft.distanceTo(location)), 2) + Math.pow(Math.abs(lowerLeft.distanceTo(location)), 2) + Math.pow(Math.abs(campusHeight), 2)) / (2 * campusHeight);
-                double xpx = getXPixel(location, translate);
-                double ypx = getYPixel(location, translate);
-                System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
-                System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
-                dotParams = new RelativeLayout.LayoutParams(100, 100);
-                dotParams.leftMargin = (int) xpx + 105;
-                dotParams.topMargin = (int) ypx + 685;
-                relativeLayout.addView(dot, dotParams);
-                dot.bringToFront();
-                System.out.println("done");
-            }
-
-            public double getXPixel(Location location, double translate) {
-                return (Math.sqrt(Math.abs(Math.pow(Math.abs(upperLeft.distanceTo(location)), 2)) - Math.pow(translate, 2))) * ImageSizeW / campusWidth;
-            }
-
-            public double getYPixel(Location current, double translate) {
-                return translate * ImageSizeH / campusHeight;
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET}, 1);
-            }
+        System.out.println("Ia m here");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return;
-        } else {
-            setLocationButton();
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(currentLocation != null){
+            System.out.println(currentLocation.toString());
+        }else{
+            System.out.println("null");
+        }
     }
 
     @Override
@@ -238,14 +325,5 @@ public class MapActivity extends AppCompatActivity {
                 }
                 return;
         }
-    }
-
-    private void setLocationButton() {
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
     }
 }
