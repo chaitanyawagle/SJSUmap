@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -67,7 +68,6 @@ public class MapActivity extends AppCompatActivity {
         dot = new ImageView(MapActivity.this);
         dot.setImageResource(R.drawable.red_dot);
         dot.setDrawingCacheEnabled(true);
-        dotParams = new RelativeLayout.LayoutParams(50, 50);
 
         upperLeft.setLatitude(37.335771);
         upperLeft.setLongitude(-121.886028);
@@ -159,12 +159,13 @@ public class MapActivity extends AppCompatActivity {
                 if (relativeLayout.indexOfChild(dot) != 0) {
                     relativeLayout.removeView(dot);
                 }
-                dotParams = new RelativeLayout.LayoutParams(50, 50);
-                dotParams.leftMargin = getPixelLocation(currentLocation).x + 105;
-                dotParams.topMargin = getPixelLocation(currentLocation).y + 685;
+                int xpx = getPixelLocation(currentLocation).x + 105;
+                int ypx = getPixelLocation(currentLocation).y + 685;
+                dotParams = new RelativeLayout.LayoutParams(100, 100);
+                dotParams.leftMargin = xpx;
+                dotParams.topMargin = ypx;
                 relativeLayout.addView(dot, dotParams);
                 dot.bringToFront();
-
             }
         });
 
@@ -175,19 +176,13 @@ public class MapActivity extends AppCompatActivity {
                         if (relativeLayout.indexOfChild(dot) != 0) {
                             relativeLayout.removeView(dot);
                         }
+                        int xpx = getPixelLocation(currentLocation).x + 105;
+                        int ypx = getPixelLocation(currentLocation).y + 685;
                         dotParams = new RelativeLayout.LayoutParams(50, 50);
-                        dotParams.leftMargin = getPixelLocation(location).x + 105;
-                        dotParams.topMargin = getPixelLocation(location).y + 685;
+                        dotParams.leftMargin = xpx;
+                        dotParams.topMargin = ypx;
                         relativeLayout.addView(dot, dotParams);
                         dot.bringToFront();
-                    }
-
-                    public double getXPixel(Location location, double translate) {
-                        return (Math.sqrt(Math.abs(Math.pow(Math.abs(upperLeft.distanceTo(location)), 2)) - Math.pow(translate, 2))) * ImageSizeW / campusWidth;
-                    }
-
-                    public double getYPixel(Location current, double translate) {
-                        return translate * ImageSizeH / campusHeight;
                     }
 
                     @Override
@@ -229,5 +224,12 @@ public class MapActivity extends AppCompatActivity {
 
         Coordinate pixel = new Coordinate((int) xpx,(int) ypx);
         return pixel;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        relativeLayout.removeView(pin);
+        relativeLayout.removeView(dot);
     }
 }
