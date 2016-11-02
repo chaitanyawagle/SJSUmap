@@ -30,7 +30,7 @@ import java.io.InputStream;
 
 public class BuildingActivity extends AppCompatActivity {
 
-    TextView address, duration;
+    TextView address, duration, distance;
     Button streetView;
     ImageView buildingImage;
     double x = 37.334065;
@@ -66,7 +66,7 @@ public class BuildingActivity extends AppCompatActivity {
         buildingImage.setBackgroundResource(building.image);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         duration = (TextView) findViewById(R.id.duration);
-
+        distance = (TextView) findViewById(R.id.distance);
         getSupportActionBar().setTitle(getResources().getString(building.name));
         address.setText(getResources().getString(building.address));
 
@@ -190,11 +190,25 @@ public class BuildingActivity extends AppCompatActivity {
                     .getJSONObject("duration");
 
 
-                String dis = jsonObject.get("text").toString();
+                String dur = jsonObject.get("text").toString();
+                System.out.println(dur);
+
+                duration.setText(dur );
+                //address.setText(dis);
+                JSONObject jsonObjectt = new JSONObject(jsonString)
+                        .getJSONArray("rows")
+                        .getJSONObject(0)
+                        .getJSONArray("elements")
+                        .getJSONObject(0)
+                        .getJSONObject("distance");
+
+
+                String dis = jsonObjectt.get("text").toString();
                 System.out.println(dis);
 
-                duration.setText(dis );
-                //address.setText(dis);
+                distance.setText(dis);
+
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
