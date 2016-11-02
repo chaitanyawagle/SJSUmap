@@ -69,17 +69,17 @@ public class MapActivity extends AppCompatActivity {
         dot.setDrawingCacheEnabled(true);
         dotParams = new RelativeLayout.LayoutParams(50, 50);
 
-        upperLeft.setLatitude(37.335813);
-        upperLeft.setLongitude(-121.885899);
+        upperLeft.setLatitude(37.335771);
+        upperLeft.setLongitude(-121.886028);
 
-        upperRight.setLatitude(37.338893);
-        upperRight.setLongitude(-121.879698);
+        upperRight.setLatitude(37.338808);
+        upperRight.setLongitude(-121.879762);
 
-        lowerLeft.setLatitude(37.334557);
-        lowerLeft.setLongitude(-121.876453);
+        lowerLeft.setLatitude(37.331569);
+        lowerLeft.setLongitude(-121.882840);
 
-        lowerRight.setLatitude(37.331550);
-        lowerRight.setLongitude(-121.882851);
+        lowerRight.setLatitude(37.334611);
+        lowerRight.setLongitude(-121.876587);
 
         campusWidth = upperLeft.distanceTo(upperRight);
         campusHeight = upperLeft.distanceTo(lowerLeft);
@@ -159,32 +159,9 @@ public class MapActivity extends AppCompatActivity {
                 if (relativeLayout.indexOfChild(dot) != 0) {
                     relativeLayout.removeView(dot);
                 }
-                double a = Math.abs(upperLeft.distanceTo(currentLocation));
-                System.out.println("a = " + a);
-
-                double b = Math.abs(lowerLeft.distanceTo(currentLocation));
-                System.out.println("b = " + b);
-
-                double c = Math.abs(campusHeight);
-                System.out.println("c = " + c);
-
-                double area = Math.sqrt((a+b+c)/2);
-                double altitude = (2 * area) / c;
-
-                double locationHeigth = Math.sqrt(Math.pow(a,2) - Math.pow(altitude,2));
-                double locationWidth = altitude;
-
-                double xpx = locationWidth * ImageSizeW / campusWidth;
-                double ypx = locationHeigth * ImageSizeH / campusHeight;
-
-                System.out.println("xpx = " + xpx);
-                System.out.println("ypx = " + ypx);
-
-                System.out.println("Current(" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() + ")");
-                System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
                 dotParams = new RelativeLayout.LayoutParams(100, 100);
-                dotParams.leftMargin = (int) xpx + 105;
-                dotParams.topMargin = (int) ypx + 685;
+                dotParams.leftMargin = getPixelLocation(currentLocation).x + 105;
+                dotParams.topMargin = getPixelLocation(currentLocation).y + 685;
                 relativeLayout.addView(dot, dotParams);
                 dot.bringToFront();
                 System.out.println("done");
@@ -194,36 +171,13 @@ public class MapActivity extends AppCompatActivity {
         listener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        userLocation = location;
+                        System.out.println("In listners");
                         if (relativeLayout.indexOfChild(dot) != 0) {
                             relativeLayout.removeView(dot);
                         }
-                        double a = Math.abs(upperLeft.distanceTo(location));
-                        System.out.println("k = " + a);
-
-                        double b = Math.abs(lowerLeft.distanceTo(location));
-                        System.out.println("m = " + b);
-
-                        double c = Math.abs(campusHeight);
-                        System.out.println("n = " + c);
-
-                        double area = Math.sqrt((a+b+c)/2);
-                        double altitude = (2 * area) / c;
-
-                        double locationHeigth = Math.sqrt(Math.pow(a,2) - Math.pow(altitude,2));
-                        double locationWidth = altitude;
-
-                        double xpx = locationWidth * ImageSizeW / campusWidth;
-                        double ypx = locationHeigth * ImageSizeH / campusHeight;
-
-                        System.out.println("xpx = " + xpx);
-                        System.out.println("ypx = " + ypx);
-
-                        System.out.println("Current(" + location.getLatitude() + "," + location.getLongitude() + ")");
-                        System.out.println("Pixel(" + ((int) xpx + 105) + "," + ((int) ypx + 685) + ")");
                         dotParams = new RelativeLayout.LayoutParams(100, 100);
-                        dotParams.leftMargin = (int) xpx + 105;
-                        dotParams.topMargin = (int) ypx + 685;
+                        dotParams.leftMargin = getPixelLocation(location).x + 105;
+                        dotParams.topMargin = getPixelLocation(location).y + 685;
                         relativeLayout.addView(dot, dotParams);
                         dot.bringToFront();
                         System.out.println("done");
@@ -252,7 +206,6 @@ public class MapActivity extends AppCompatActivity {
 
                     }
                 };
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         System.out.println("Ia m here");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -260,5 +213,22 @@ public class MapActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    }
+
+    public Coordinate getPixelLocation(Location location){
+        double a = Math.abs(upperLeft.distanceTo(location));
+        double b = Math.abs(lowerLeft.distanceTo(location));
+        double c = Math.abs(campusHeight);
+        double s = (a+b+c)/2;
+        double area = Math.sqrt(s*(s-a)*(s-b)*(s-c));
+
+        double locationWidth = (2 * area) / c;
+        double locationHeigth = Math.sqrt(Math.pow(a,2) - Math.pow(locationWidth,2));
+
+        double xpx = locationWidth * ImageSizeW / campusWidth;
+        double ypx = locationHeigth * ImageSizeH / campusHeight;
+
+        Coordinate pixel = new Coordinate((int) xpx,(int) ypx);
+        return pixel;
     }
 }
