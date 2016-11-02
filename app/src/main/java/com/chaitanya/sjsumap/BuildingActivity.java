@@ -72,75 +72,14 @@ public class BuildingActivity extends AppCompatActivity {
 
 
         new GetDuration().execute();
-
-        // duration.setText(getResources().getString(jsonObject.rows.elements.duration.text));
-
-
-        System.out.println(url);
-        System.out.println(x);
-        System.out.println(y);
-
-
         streetView = (Button) findViewById(R.id.streetView);
-
-
             streetView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  /*  Uri uri = Uri.parse(String.valueOf(building.url));
-                    Intent intent = new Intent(St, uri);
-                    startActivity(intent);
-*/
-                    String one = "https://www.google.com/maps/@37.335967,-121.8856837,3a,75y,134.01h,89t/data=!3m6!1e1!3m4!1sQWDTbzdSCqqCFL5sSO_cCg!2e0!7i13312!8i6656!6m1!1e1";
-                    String two = "https://www.google.com/maps/@37.3377787,-121.8820119,3a,75y,146.84h,75.66t/data=!3m6!1e1!3m4!1soO4EqGCOWwLy5eXy-EKx-g!2e0!7i13312!8i6656!6m1!1e1";
-                    String three = "https://www.google.com/maps/@37.3335287,-121.8843338,3a,75y,63.46h,84.1t/data=!3m6!1e1!3m4!1stBY5-l3dxDZ9q003KFjVkw!2e0!7i13312!8i6656";
-                    String four = "https://www.google.com/maps/@37.3372125,-121.8784565,3a,75y,278.88h,84.51t/data=!3m6!1e1!3m4!1sBaI2lHplpsQMZCNik6C8zQ!2e0!7i13312!8i6656";
-                    String five = "https://www.google.com/maps/@37.3372125,-121.8784565,3a,75y,278.88h,84.51t/data=!3m6!1e1!3m4!1sBaI2lHplpsQMZCNik6C8zQ!2e0!7i13312!8i6656";
-                    String six = "https://www.google.com/maps/@37.3386745,-121.8809632,3a,75y,355.98h,92.61t/data=!3m6!1e1!3m4!1s3O0i45z_Vl7Q9-as0iaIEg!2e0!7i13312!8i6656!6m1!1e1";
 
+                    Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(getResources().getString(building.url)));
 
-                    if(building.id == 1){
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(one));
-                        startActivity(viewIntent);
-                    }
-                    else if(building.id == 2) {
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(two));
-                        startActivity(viewIntent);
-
-                    }
-                    else if(building.id == 3) {
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(three));
-                        startActivity(viewIntent);
-                    }
-                    else if(building.id == 4) {
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(four));
-                        startActivity(viewIntent);
-
-                    }
-                    else if(building.id == 5) {
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(five));
-                        startActivity(viewIntent);
-
-                    }
-                    else if(building.id == 6) {
-                        Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(six));
-                        startActivity(viewIntent);
-
-                    }
-                    else {
-
-                    }
-
-
-/*
-                    System.out.println(building.id);
-
-
-                    //Uri uri = Uri.parse(String.valueOf(building.url));
-                    //Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    Intent intent = new Intent(BuildingActivity.this, StreetView.class);
-                    startActivity(intent);
-*/
+                    startActivity(viewIntent);
                 }
             });
 
@@ -220,10 +159,7 @@ public class BuildingActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     System.err.println("Unexpected code " + response);
                 }
-//                Headers responseHeaders = response.headers();
-//                for (int i = 0; i < responseHeaders.size(); i++) {
-//                    System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-//                }
+
 
                 StringBuilder builder = new StringBuilder(response.body().string());
                 String jsonString = builder.toString();

@@ -17,7 +17,6 @@ public class StreetView extends MapActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_street_view);
-        System.out.println("inside ");
         StreetViewPanoramaFragment streetViewPanoramaFragment =
                 (StreetViewPanoramaFragment) getFragmentManager()
                         .findFragmentById(R.id.streetviewpanorama);

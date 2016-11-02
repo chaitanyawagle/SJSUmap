@@ -99,7 +99,7 @@ public class MapActivity extends AppCompatActivity {
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("(" + ((int) event.getX() - v.getLeft()) + "," + ((int) event.getY() - v.getTop()) + ")");
+
                 for (Building building : buildingList) {
                     if (building.checkTouch((int) event.getX() - v.getLeft(), (int) event.getY() - v.getTop())) {
                         try {
@@ -164,14 +164,14 @@ public class MapActivity extends AppCompatActivity {
                 dotParams.topMargin = getPixelLocation(currentLocation).y + 685;
                 relativeLayout.addView(dot, dotParams);
                 dot.bringToFront();
-                System.out.println("done");
+
             }
         });
 
         listener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        System.out.println("In listners");
+
                         if (relativeLayout.indexOfChild(dot) != 0) {
                             relativeLayout.removeView(dot);
                         }
@@ -180,7 +180,6 @@ public class MapActivity extends AppCompatActivity {
                         dotParams.topMargin = getPixelLocation(location).y + 685;
                         relativeLayout.addView(dot, dotParams);
                         dot.bringToFront();
-                        System.out.println("done");
                     }
 
                     public double getXPixel(Location location, double translate) {
@@ -207,7 +206,7 @@ public class MapActivity extends AppCompatActivity {
                     }
                 };
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        System.out.println("Ia m here");
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
