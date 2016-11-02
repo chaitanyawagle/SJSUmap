@@ -159,7 +159,7 @@ public class MapActivity extends AppCompatActivity {
                 if (relativeLayout.indexOfChild(dot) != 0) {
                     relativeLayout.removeView(dot);
                 }
-                dotParams = new RelativeLayout.LayoutParams(50, 50);
+                dotParams = new RelativeLayout.LayoutParams(100, 100);
                 //
                 dotParams.leftMargin = getPixelLocation(currentLocation).x + 105;
                 dotParams.topMargin = getPixelLocation(currentLocation).y + 685;
@@ -178,7 +178,7 @@ public class MapActivity extends AppCompatActivity {
                         if (relativeLayout.indexOfChild(dot) != 0) {
                             relativeLayout.removeView(dot);
                         }
-                        dotParams = new RelativeLayout.LayoutParams(50, 50);
+                        dotParams = new RelativeLayout.LayoutParams(100, 100);
                         dotParams.leftMargin = getPixelLocation(location).x + 105;
                         dotParams.topMargin = getPixelLocation(location).y + 685;
                         relativeLayout.addView(dot, dotParams);
