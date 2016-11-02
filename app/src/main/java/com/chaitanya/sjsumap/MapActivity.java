@@ -160,7 +160,6 @@ public class MapActivity extends AppCompatActivity {
                     relativeLayout.removeView(dot);
                 }
                 dotParams = new RelativeLayout.LayoutParams(50, 50);
-                //
                 dotParams.leftMargin = getPixelLocation(currentLocation).x + 105;
                 dotParams.topMargin = getPixelLocation(currentLocation).y + 685;
 
