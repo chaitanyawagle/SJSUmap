@@ -77,8 +77,8 @@ public class BuildingActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(getResources().getString(building.url)));
-
+//                    Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(getResources().getString(building.url)));
+                Intent viewIntent = new Intent(BuildingActivity.this,StreetView.class);
                     startActivity(viewIntent);
                 }
             });

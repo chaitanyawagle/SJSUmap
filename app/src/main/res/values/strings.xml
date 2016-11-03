@@ -44,5 +44,6 @@
     <string name="spglon"></string>
     <string name="spglat"></string>
 
+    <string name="google_maps_key">AIzaSyBjHXGKoV9SebN7V4XHrAoRsB7h3Ie7ZVg</string>
 
 </resources>
