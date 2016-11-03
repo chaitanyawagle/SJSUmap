@@ -79,6 +79,9 @@ public class BuildingActivity extends AppCompatActivity {
 
 //                    Intent viewIntent = new Intent("android.intent.action.VIEW",Uri.parse(getResources().getString(building.url)));
                 Intent viewIntent = new Intent(BuildingActivity.this,StreetView.class);
+                    viewIntent.putExtra("lat",building.blat);
+                    viewIntent.putExtra("lon",building.blon);
+                    viewIntent.putExtra("name",building.name);
                     startActivity(viewIntent);
                 }
             });
