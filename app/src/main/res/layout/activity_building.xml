@@ -51,6 +51,7 @@
         android:weightSum="1"
         android:orientation="horizontal"
         android:id="@+id/durationLL"
+
         android:layout_marginTop="60px">
 
         <ImageButton
@@ -78,7 +79,8 @@
         android:orientation="horizontal"
         android:id="@+id/distanceLL"
         android:layout_below="@+id/durationLL"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60px">
 
         <ImageButton
             android:layout_width="49dp"
